@@ -1,9 +1,11 @@
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
 
-group 'dev.ericschaefer'
-version '1.0-SNAPSHOT'
+group 'com.github.ericschaefer'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -22,3 +24,62 @@ test {
         logger.quiet "Running ${desc.className}.${desc.name}: ${result.resultType}"
     }
 }
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'com.github.ericschaefer:commonmark-ext-external-links'
+                description = 'A commonmark-java extension for adding target="_blank" and rel="noopener" attributes to links'
+                url = 'https://github.com/ericschaefer/commonmark-ext-external-links'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/mit-license.php'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'Eric-Alexander Schaefer'
+                        email = 'eric.schaefer@ericschaefer.dev'
+                        organization = 'Eric-Alexander Schaefer'
+                        organizationUrl = 'https://www.ericschaefer.dev'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git@github.com:ericschaefer/commonmark-ext-external-links.git'
+                    developerConnection = 'scm:git:git@github.com:ericschaefer/commonmark-ext-external-links.git'
+                    url = 'https://github.com/ericschaefer/commonmark-ext-external-links/tree/master'
+                }
+            }
+
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            name = "OSSRH"
+
+            def stagingRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : stagingRepoUrl
+
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+build.dependsOn(sourcesJar)
+build.dependsOn(javadocJar)
