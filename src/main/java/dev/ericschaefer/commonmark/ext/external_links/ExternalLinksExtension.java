@@ -3,16 +3,23 @@ package dev.ericschaefer.commonmark.ext.external_links;
 import org.commonmark.Extension;
 import org.commonmark.renderer.html.HtmlRenderer;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * commonmark-java extension for adding the attributes target="_blank" and rel="noopener" to links
  *
  * Create via ExternalLinksExtension.create(baseUrl) and add to extension in parser and render build steps.
  */
 public class ExternalLinksExtension implements HtmlRenderer.HtmlRendererExtension {
-    private final String baseUrl;
+    private final URL url;
 
     private ExternalLinksExtension(String baseUrl) {
-        this.baseUrl = baseUrl;
+        try {
+            this.url = new URL(baseUrl);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Malformed URL: " + baseUrl, e);
+        }
     }
 
     /**
@@ -30,6 +37,6 @@ public class ExternalLinksExtension implements HtmlRenderer.HtmlRendererExtensio
 
     @Override
     public void extend(HtmlRenderer.Builder rendererBuilder) {
-        rendererBuilder.attributeProviderFactory(context -> ExternalLinksAttributeProvider.create(baseUrl));
+        rendererBuilder.attributeProviderFactory(context -> ExternalLinksAttributeProvider.create(url));
     }
 }

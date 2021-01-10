@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ExternalLinksExtensionTest  {
     private Parser parser;
@@ -50,6 +51,13 @@ public class ExternalLinksExtensionTest  {
         assertRenderedText(
                 "external url: [external](http://www.google.com/some_path)",
                 "<p>external url: <a href=\"http://www.google.com/some_path\" target=\"_blank\" rel=\"noopener\">external</a></p>\n"
+        );
+    }
+
+    @Test
+    public void malformedBaseUrl() {
+        assertThrows(IllegalArgumentException.class,
+                () -> ExternalLinksExtension.create("abcdef")
         );
     }
 

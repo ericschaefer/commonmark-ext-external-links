@@ -4,17 +4,19 @@ import org.commonmark.node.Link;
 import org.commonmark.node.Node;
 import org.commonmark.renderer.html.AttributeProvider;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 class ExternalLinksAttributeProvider implements AttributeProvider {
-    private final String baseUrl;
+    private final URL url;
 
-    private ExternalLinksAttributeProvider(String baseUrl) {
-        this.baseUrl = baseUrl;
+    private ExternalLinksAttributeProvider(URL url) {
+        this.url = url;
     }
 
-    public static ExternalLinksAttributeProvider create(String baseUrl) {
-        return new ExternalLinksAttributeProvider(baseUrl);
+    public static ExternalLinksAttributeProvider create(URL url) {
+        return new ExternalLinksAttributeProvider(url);
     }
 
     @Override
@@ -22,12 +24,27 @@ class ExternalLinksAttributeProvider implements AttributeProvider {
         if (node instanceof Link) {
             Link link = (Link) node;
             String linkDestination = link.getDestination();
-            if (linkDestination.startsWith("/") || linkDestination.toLowerCase().startsWith(baseUrl)) {
-                return; // internal URL (relative or absolute)
+            if (linkDestination.startsWith("/")) { // relative URL
+                linkDestination = url.getProtocol() + url.getHost() + linkDestination;
+            }
+
+            URL linkUrl;
+            try {
+                linkUrl = new URL(linkDestination);
+            } catch (MalformedURLException e) {
+                return; // ignore link
+            }
+
+            if (isInternal(linkUrl)) {
+                return;
             }
 
             attributes.put("target", "_blank");
             attributes.put("rel", "noopener");
         }
+    }
+
+    private boolean isInternal(URL linkUrl) {
+        return linkUrl.getHost().equals(url.getHost());
     }
 }
