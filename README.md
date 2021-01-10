@@ -2,6 +2,10 @@
 
 This is a [commonmark-java](https://github.com/commonmark/commonmark-java) plugin adding target=_blank" and rel="noopener" to external links.
 
+![Build](https://github.com/ericschaefer/commonmark-ext-external-links/workflows/Build/badge.svg)
+![Maven Central](https://img.shields.io/maven-central/v/com.github.ericschaefer/commonmark-ext-external-links)
+[![javadoc](https://javadoc.io/badge2/com.github.ericschaefer/commonmark-ext-external-links/javadoc.svg?color=blue)](https://javadoc.io/doc/com.github.ericschaefer/commonmark-ext-external-links)
+
 ## Usage
 
 Just add it as an extension as usual providing the base URL of your site for detecting if a link is internal or external:
