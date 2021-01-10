@@ -46,8 +46,23 @@ html = renderer.render(node);
 
 ## Gradle
 
-TODO
+```Groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.github.ericschaefer:commonmark-ext-external-links:1.0'
+}
+
+```
 
 ## Maven
 
-TODO
+```XML
+<dependency>
+    <groupId>com.github.ericschaefer</groupId>
+    <artifactId>commonmark-ext-external-links</artifactId>
+    <version>1.0</version>
+</dependency>
+```
