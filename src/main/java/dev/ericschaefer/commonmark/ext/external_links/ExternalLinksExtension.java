@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * commonmark-java extension for adding the attributes target="_blank" and rel="noopener" to links
+ * commonmark-java extension for adding the attributes target="_blank" and rel="noopener noreferrer" to links
  *
  * Create via ExternalLinksExtension.create(baseUrl) and add to extension in parser and render build steps.
  */

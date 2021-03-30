@@ -50,7 +50,7 @@ public class ExternalLinksExtensionTest  {
     public void externalUrl() {
         assertRenderedText(
                 "external url: [external](http://www.google.com/some_path)",
-                "<p>external url: <a href=\"http://www.google.com/some_path\" target=\"_blank\" rel=\"noopener\">external</a></p>\n"
+                "<p>external url: <a href=\"http://www.google.com/some_path\" target=\"_blank\" rel=\"noopener noreferrer\">external</a></p>\n"
         );
     }
 

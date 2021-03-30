@@ -40,7 +40,7 @@ class ExternalLinksAttributeProvider implements AttributeProvider {
             }
 
             attributes.put("target", "_blank");
-            attributes.put("rel", "noopener");
+            attributes.put("rel", "noopener noreferrer");
         }
     }
 
