@@ -1,6 +1,6 @@
 # commonmark-ext-external-links
 
-This is a [commonmark-java](https://github.com/commonmark/commonmark-java) plugin adding target=_blank" and rel="noopener" to external links.
+This is a [commonmark-java](https://github.com/commonmark/commonmark-java) plugin adding target=_blank" and rel="noopener noreferrer" to external links.
 
 [![Build](https://github.com/ericschaefer/commonmark-ext-external-links/workflows/Build/badge.svg)](https://github.com/ericschaefer/commonmark-ext-external-links/actions?query=workflow%3ABuild)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.ericschaefer/commonmark-ext-external-links)](https://search.maven.org/search?q=g:com.github.ericschaefer)
